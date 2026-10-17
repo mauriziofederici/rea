@@ -9,12 +9,16 @@ La guida ufficiale in italiano è [docs/readme/README_it.md](docs/readme/README_
 La directory [`.devcontainer`](.devcontainer/devcontainer.json) prepara un ambiente Linux con Node.js 24. L'ambiente viene creato solo su tua iniziativa.
 
 1. Nel repository GitHub apri **Code → Codespaces → Create codespace on main**.
-2. Attendi l'esecuzione del comando `npm ci && npm run build:cached && node scripts/rea.mjs --help` durante la creazione. Può richiedere diversi minuti.
-3. Nel terminale del Codespace controlla il programma:
+2. Attendi che il contenitore si avvii. La configurazione usa l'immagine Microsoft **`24-bookworm`** e non esegue automaticamente `npm ci`, per evitare che un eventuale errore di compilazione blocchi Codespaces.
+3. Apri il terminale e installa/compila **il tuo fork**:
    ```bash
+   node --version
+   npm ci
+   npm run build:cached
    node scripts/rea.mjs --help
    ```
-4. Per analizzare un progetto per il quale disponi delle autorizzazioni necessarie, carica i file di prova nel Codespace ed esegui un comando documentato da REA. Esempio per una directory JavaScript/Electron:
+4. Se un Codespace esistente è in **recovery mode**, nel terminale esegui `git pull --ff-only`. Poi apri la palette con `Ctrl+Shift+P`, scegli **Codespaces: Rebuild Container** e attendi. Se il problema continua, clicca **View Creation Log** e leggi l'errore esatto.
+5. Per analizzare un progetto per il quale disponi delle autorizzazioni necessarie, carica i file di prova nel Codespace ed esegui un comando documentato da REA. Esempio per una directory JavaScript/Electron:
    ```bash
    node scripts/rea.mjs analyze-javascript-application /percorso/assoluto/app --json
    ```
