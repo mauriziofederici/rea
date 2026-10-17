@@ -1,0 +1,16 @@
+{
+  "servers": {
+    "rea": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "${workspaceFolder}/scripts/rea.mjs",
+        "--mcp"
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "REA_MCP_INPUT_SCHEMA_PROFILE": "compact"
+      }
+    }
+  }
+}

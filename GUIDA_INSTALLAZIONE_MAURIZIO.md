@@ -74,3 +74,16 @@ Nel menu **Actions**, scegli **REA — Verifica installazione npm** e premi **Ru
 - Il repository originale contiene numerosi workflow CI; prima di attivare Actions o Codespaces controlla limiti, permessi e costi del tuo account GitHub.
 
 **Stato iniziale:** questa configurazione aggiunge un ambiente predisposto e un controllo manuale. Non attesta che l'installazione sia già stata eseguita o testata sul tuo computer.
+
+## 6. MCP in VS Code / GitHub Codespaces: usare il fork compilato
+
+La configurazione [`.vscode/mcp.json`](.vscode/mcp.json) registra un server MCP locale di nome **rea** per il workspace VS Code. Esegue direttamente il codice del fork già compilato tramite `node scripts/rea.mjs --mcp` nella directory del progetto; **non scarica una seconda copia da npm**.
+
+1. Dopo aver eseguito `npm ci`, `npm run build:cached` e `node scripts/rea.mjs --help`, aggiorna il workspace con `git pull --ff-only origin main`.
+2. In VS Code apri la palette `Ctrl+Shift+P` e cerca **MCP: List Servers**.
+3. Seleziona **rea** e, se proposto, **Start Server**; controlla che lo stato sia **Running**. Per problemi usa **Show Output**.
+4. Apri la chat di VS Code con un agente dotato di accesso MCP (per esempio GitHub Copilot in modalità agente), abilita gli strumenti REA e prova la richiesta: «Usa il server MCP rea per elencare le sue capacità e indicare quali analisi statiche sono disponibili in questo Codespace. Non analizzare file esterni e non modificare il repository».
+
+Se REA non parte, controlla i log del server e ricompila con `npm ci && npm run build:cached`. Dopo una ricostruzione del container potrebbero mancare gli artefatti compilati. Se il client segnala **più di 128 strumenti abilitati**, limita gli strumenti REA disponibili per la singola chat oppure abilita la gestione dei gruppi virtuali di VS Code (se disponibile).
+
+**Sicurezza:** il server MCP dispone dei permessi del processo nell'ambiente Codespaces. Non assegnargli accesso a segreti, dati clienti o file non autorizzati. La configurazione MCP del workspace non collega automaticamente REA a ChatGPT in questa conversazione e non garantisce l'accesso a motori nativi come Ghidra.
