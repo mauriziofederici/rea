@@ -1,0 +1,5 @@
+{
+  "name": "REA - Ambiente di sviluppo del fork",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-24-bookworm",
+  "postCreateCommand": "npm ci && npm run build:cached && node scripts/rea.mjs --help"
+}
